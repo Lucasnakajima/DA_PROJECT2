@@ -12,23 +12,26 @@
 
 using namespace std;
 
+struct Edge {
+    int ori;
+    int dest;   // Destination node
+    double weight; // An integer weight
+};
+
+struct Node {
+    list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
+    bool visited;// As the node been visited on a search?
+    double distance;
+    double longitude;
+    double latitude;
+};
+
 class Graph {
-    struct Edge {
-        int dest;   // Destination node
-        int weight; // An integer weight
-    };
-
-    struct Node {
-        list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
-        bool visited;// As the node been visited on a search?
-        int distance;
-    };
-
-    int n;              // Graph size (vertices are numbered from 1 to n)
     bool hasDir;        // false: undirected; true: directed
-    vector<Node> nodes; // The list of nodes being represented
 
 public:
+    vector<Node> nodes;
+
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int num, bool dir = false);
 

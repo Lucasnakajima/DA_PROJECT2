@@ -124,3 +124,8 @@ fabric.properties
 /.vscode/
 /cmake-build-debug/.cmake/
 /cmake-build-debug/Projeto2.cbp
+/cmake-build-debug/Projeto2
+/.idea/.name
+/cmake-build-debug/graph1/
+/cmake-build-debug/graph2/
+/cmake-build-debug/graph3/

@@ -10,11 +10,15 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include "Graph.h"
 
 using namespace std;
 
 class load_graphs {
-void load();
+public:
+    Graph load_toy(string filename);
+    Graph load_real(string graph);
+    Graph load_medium(int num);
 };
 
 
