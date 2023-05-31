@@ -9,6 +9,8 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <stack>
+#include <limits>
 
 using namespace std;
 
@@ -49,6 +51,17 @@ public:
     // ----- Functions to implement in this class -----
     int distance(int a, int b);
     int diameter();
+
+    const Node& getNode(int index) const {
+        return nodes[index];
+    }
+
+    int getNumNodes() const {
+        return nodes.size();
+    }
+
+    void BacktrackingUtil(int current, int count, double cost, double& minCost, std::vector<int>& path);
+    std::vector<int> Backtracking();
 };
 
 

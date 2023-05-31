@@ -102,3 +102,41 @@ int Graph::diameter() {
     }
     return max;
 }
+
+std::vector<int> Graph::Backtracking() {
+    int numNodes = getNumNodes();
+
+    for (int i = 0; i < nodes.size(); i++){ nodes[i].visited = false; nodes[i].distance = -1;}
+    nodes[0].visited = true;
+
+    std::vector<int> path(numNodes);
+
+    double minCost = std::numeric_limits<double>::max();
+    BacktrackingUtil(0, 0, 0, minCost, path);
+
+    return path;
+}
+
+void Graph::BacktrackingUtil(int current, int count, double cost, double& minCost, std::vector<int>& path) {
+    nodes[current].visited = true;
+    path[count] = current;
+
+    if (count == getNumNodes() - 1) {
+        // Check if there is an edge back to the starting node
+        if (nodes[current].adj.front().dest == 0) {
+            double totalCost = cost + nodes[current].adj.front().weight;
+            if (totalCost < minCost) {
+                minCost = totalCost;
+            }
+        }
+        return;
+    }
+
+    for (const Edge& edge : nodes[current].adj) {
+        if (!nodes[edge.dest].visited && edge.dest!=0) {
+            BacktrackingUtil(edge.dest, count + 1, cost + edge.weight, minCost, path);
+        }
+    }
+
+    nodes[current].visited = false;
+}
