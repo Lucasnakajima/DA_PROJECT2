@@ -55,13 +55,13 @@ public:
     int diameter();
 
     const Node& getNode(int index) const ;
-    double distanceBetweenNodes(const Node& node1, const Node& node2);
+    double Haversine(const Node& node1, const Node& node2);
 
     int getNumNodes() const;
 
     void BacktrackingUtil(int current, int count, double cost, double& minCost, std::vector<int>& path);
     std::vector<int> Backtracking();
-    std::vector<int> TSPApproximation();
+    std::vector<int> NearstNeighbor();
     double ratioBetweentwopaths(vector<int>opt, vector<int>test);
 };
 

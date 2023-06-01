@@ -111,7 +111,7 @@ int Graph::getNumNodes() const {
     return nodes.size();
 }
 
-double Graph::distanceBetweenNodes(const Node& node1, const Node& node2){
+double Graph::Haversine(const Node& node1, const Node& node2){
     double lat1 = node1.latitude;
     double lon1 = node1.longitude;
     double lat2 = node2.latitude;
@@ -216,7 +216,7 @@ void Graph::BacktrackingUtil(int current, int count, double cost, double& minCos
 }
 
 //O(n2)
-std::vector<int> Graph::TSPApproximation() {
+std::vector<int> Graph::NearstNeighbor() {
     int numNodes = getNumNodes();
 
     std::vector<int> path(numNodes);
@@ -234,7 +234,7 @@ std::vector<int> Graph::TSPApproximation() {
             int neighbor = edge.dest;
             double distance;
             if (nodes[currentNode].latitude != 0 && edge.weight == 0) {
-                distance = distanceBetweenNodes(nodes[currentNode], nodes[neighbor]);
+                distance = Haversine(nodes[currentNode], nodes[neighbor]);
             } else {
                 distance = edge.weight;
             }
@@ -249,8 +249,8 @@ std::vector<int> Graph::TSPApproximation() {
             // Choose the unvisited node with the minimum distance from the current node
             minDistance = std::numeric_limits<double>::max();
             for (int j = 0; j < numNodes; ++j) {
-                if (!visited[j] && distanceBetweenNodes(nodes[currentNode], nodes[j]) < minDistance) {
-                    minDistance = distanceBetweenNodes(nodes[currentNode], nodes[j]);
+                if (!visited[j] && Haversine(nodes[currentNode], nodes[j]) < minDistance) {
+                    minDistance = Haversine(nodes[currentNode], nodes[j]);
                     nearestNeighbor = j;
                 }
             }
