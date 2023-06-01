@@ -23,6 +23,33 @@ void Graph::addEdgewithoutNodes(int src, int dest, int weight) {
     }
 }
 
+std::vector<std::vector<int>> Graph::findConnectedComponents() {
+    std::vector<std::vector<int>> components;
+    std::vector<bool> visited(nodes.size(), false);
+
+    for (int i = 0; i < nodes.size(); ++i) {
+        if (!visited[i]) {
+            std::vector<int> component;
+            dfs_connected(i, visited, component);
+            components.push_back(component);
+        }
+    }
+
+    return components;
+}
+
+void Graph::dfs_connected(int v, std::vector<bool>& visited, std::vector<int>& component) {
+    visited[v] = true;
+    component.push_back(v);
+
+    for (const Edge& edge : nodes[v].adj) {
+        int neighbor = edge.dest;
+        if (!visited[neighbor]) {
+            dfs_connected(neighbor, visited, component);
+        }
+    }
+}
+
 // Depth-First Search: example implementation
 void Graph::dfs(int v) {
     // show node order
@@ -133,6 +160,7 @@ double Graph::Haversine(const Node& node1, const Node& node2){
     return distance;
 }
 
+
 double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
     if(opt[0]!=test[0] && opt.size() != test.size()){
         return -1;
@@ -140,15 +168,24 @@ double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
     int start = opt[0];
     double distance_opt=0;
     double distance_test=0;
+    bool is_h = true;
     int current = start;
     for(int i=1;i<opt.size();i++){
+        is_h = true;
         for(auto e : nodes[current].adj){
             if(e.dest==opt[i]){
                 distance_opt = distance_opt + e.weight;
+                is_h = false;
                 break;
             }
         }
-        current=opt[i];
+        if(!is_h){
+            current = opt[i];
+        }
+        else {
+            distance_test = distance_test + Haversine(nodes[current], nodes[opt[i]]);
+            current = opt[i];
+        }
     }
     for(auto e : nodes[current].adj){
         if(e.dest==start){
@@ -158,14 +195,23 @@ double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
     }
 
     current = start;
+    is_h = true;
     for(int i=1;i<test.size();i++){
+        is_h = true;
         for(auto e : nodes[current].adj){
             if(e.dest==opt[i]){
                 distance_test = distance_test + e.weight;
+                is_h = false;
                 break;
             }
         }
-        current=opt[i];
+        if(!is_h){
+            current = test[i];
+        }
+        else {
+            distance_test = distance_test + Haversine(nodes[current], nodes[test[i]]);
+            current = test[i];
+        }
     }
     for(auto e : nodes[current].adj){
         if(e.dest==start){
@@ -216,7 +262,7 @@ void Graph::BacktrackingUtil(int current, int count, double cost, double& minCos
 }
 
 //O(n2)
-std::vector<int> Graph::NearstNeighbor() {
+std::vector<int> Graph::NearestNeighbor() {
     int numNodes = getNumNodes();
 
     std::vector<int> path(numNodes);
@@ -263,5 +309,245 @@ std::vector<int> Graph::NearstNeighbor() {
 
     return path;
 }
+
+
+//O(n^2 log n)
+std::vector<int> Graph::TSPApproximation() {
+    std::vector<Edge> mst = minimumSpanningTree();
+
+    // Step 2: Duplicate the edges of the MST
+    std::vector<Edge> duplicatedEdges = duplicateEdges(mst);
+
+    // Step 3: Find an Eulerian tour in the multigraph
+    std::vector<int> eulerianTour = findEulerianTour(duplicatedEdges);
+
+    // Step 4: Remove duplicate nodes from the Eulerian tour to obtain a Hamiltonian tour
+    std::vector<int> hamiltonianTour = removeDuplicateNodes(eulerianTour);
+
+    auto it = std::find(hamiltonianTour.begin(), hamiltonianTour.end(), 0);
+    std::rotate(hamiltonianTour.begin(), it, hamiltonianTour.end());
+
+    return hamiltonianTour;
+}
+
+std::vector<Edge> Graph::minimumSpanningTree() {
+    int numNodes = getNumNodes();
+
+    std::vector<Edge> mstEdges;
+
+    std::vector<bool> visited(numNodes, false);
+
+    std::priority_queue<Edge, std::vector<Edge>, EdgeComparator> pq;
+
+    for (const Edge& edge : nodes[0].adj) {
+        pq.push(edge);
+    }
+
+    while (!pq.empty()) {
+        Edge minEdge = pq.top();
+        pq.pop();
+
+        int ori = minEdge.ori;
+        int dest = minEdge.dest;
+
+        if (visited[dest]) {
+            continue;
+        }
+
+        mstEdges.push_back(minEdge);
+
+        visited[dest] = true;
+
+        for (const Edge& edge : nodes[dest].adj) {
+            pq.push(edge);
+        }
+    }
+
+    for (int i = 1; i < numNodes; ++i) {
+        if (!visited[i]) {
+            std::vector<Edge> disconnectedMST = minimumSpanningTreeForComponent(i, visited);
+            mstEdges.insert(mstEdges.end(), disconnectedMST.begin(), disconnectedMST.end());
+        }
+    }
+
+    // Add missing edges using Haversine distance.
+    for (int i = 0; i < numNodes; ++i) {
+        for (int j = i + 1; j < numNodes; ++j) {
+            if (!visited[j]) {
+                Edge newEdge = {i, j, Haversine(nodes[i], nodes[j])};
+                mstEdges.push_back(newEdge);
+            }
+        }
+    }
+
+    return mstEdges;
+}
+
+std::vector<Edge> Graph::minimumSpanningTreeForComponent(int startNode, std::vector<bool>& visited) {
+    std::vector<Edge> mstEdges;
+
+    // Create a priority queue to store the edges
+    std::priority_queue<Edge, std::vector<Edge>, EdgeComparator> pq;
+
+    // Add all the edges of the start node to the priority queue
+    for (const Edge& edge : nodes[startNode].adj) {
+        pq.push(edge);
+    }
+
+    while (!pq.empty()) {
+        // Get the minimum-weight edge from the priority queue
+        Edge minEdge = pq.top();
+        pq.pop();
+
+        int ori = minEdge.ori;
+        int dest = minEdge.dest;
+
+        // Check if the destination node has already been visited
+        if (visited[dest]) {
+            continue;
+        }
+
+        // Add the minimum-weight edge to the minimum spanning tree
+        mstEdges.push_back(minEdge);
+
+        // Mark the destination node as visited
+        visited[dest] = true;
+
+        // Add the edges of the destination node to the priority queue
+        for (const Edge& edge : nodes[dest].adj) {
+            pq.push(edge);
+        }
+    }
+
+    return mstEdges;
+}
+
+std::vector<Edge> Graph::duplicateEdges(const std::vector<Edge>& edges) {
+    std::vector<Edge> duplicatedEdges;
+
+    for (const auto& edge : edges) {
+        // Duplicate the edge
+        Edge duplicatedEdge1 = {edge.ori, edge.dest, edge.weight};
+        Edge duplicatedEdge2 = {edge.dest, edge.ori, edge.weight};
+
+        // Add both duplicated edges to the list
+        duplicatedEdges.push_back(duplicatedEdge1);
+        duplicatedEdges.push_back(duplicatedEdge2);
+    }
+
+    return duplicatedEdges;
+}
+
+std::vector<int> Graph::findEulerianTour(const std::vector<Edge>& edges) {
+    // Create a multimap to store the edges for each node
+    std::multimap<int, Edge> edgeMap;
+
+    // Store the edges in the multimap
+    for (const Edge& edge : edges) {
+        edgeMap.emplace(edge.ori, edge);
+    }
+
+    std::vector<int> eulerianTour;
+    std::stack<int> tourStack;
+
+    // Find the connected components
+    std::vector<std::vector<int>> components = findConnectedComponents();
+
+    // Start the tour from node 0
+    int currentNode = 0;
+    tourStack.push(currentNode);
+
+    while (!tourStack.empty()) {
+        // Check if the current node has any remaining edges
+        if (edgeMap.find(currentNode) != edgeMap.end()) {
+            // Get the next edge from the multimap
+            auto edgeIt = edgeMap.find(currentNode);
+            Edge currentEdge = edgeIt->second;
+
+            // Remove the edge from the multimap
+            edgeMap.erase(edgeIt);
+
+            // Push the destination node onto the stack
+            tourStack.push(currentEdge.dest);
+
+            // Move to the destination node
+            currentNode = currentEdge.dest;
+        } else {
+            // Add the current node to the Eulerian tour
+            eulerianTour.push_back(currentNode);
+
+            // Move to the previous node
+            currentNode = tourStack.top();
+            tourStack.pop();
+        }
+    }
+
+    // Handle disconnected components
+    for (const auto& component : components) {
+        // Find an Eulerian tour for each disconnected component
+        std::vector<int> componentTour = findEulerianTourForComponent(component, edgeMap);
+
+        // Add the component tour to the overall Eulerian tour
+        eulerianTour.insert(eulerianTour.end(), componentTour.begin(), componentTour.end());
+    }
+
+    return eulerianTour;
+}
+
+std::vector<int> Graph::findEulerianTourForComponent(const std::vector<int>& component, std::multimap<int, Edge>& edgeMap) {
+    std::vector<int> eulerianTour;
+    std::stack<int> tourStack;
+
+    // Start the tour from the first node in the component
+    int currentNode = component[0];
+    tourStack.push(currentNode);
+
+    while (!tourStack.empty()) {
+        // Check if the current node has any remaining edges
+        if (edgeMap.find(currentNode) != edgeMap.end()) {
+            // Get the next edge from the multimap
+            auto edgeIt = edgeMap.find(currentNode);
+            Edge currentEdge = edgeIt->second;
+
+            // Remove the edge from the multimap
+            edgeMap.erase(edgeIt);
+
+            // Push the destination node onto the stack
+            tourStack.push(currentEdge.dest);
+
+            // Move to the destination node
+            currentNode = currentEdge.dest;
+        } else {
+            // Add the current node to the Eulerian tour
+            eulerianTour.push_back(currentNode);
+
+            // Move to the previous node
+            currentNode = tourStack.top();
+            tourStack.pop();
+        }
+    }
+
+    return eulerianTour;
+}
+
+std::vector<int> Graph::removeDuplicateNodes(const std::vector<int>& eulerianTour) {
+    std::vector<int> hamiltonianTour;
+
+    // Remove duplicate nodes from the Eulerian tour to obtain a Hamiltonian tour
+    std::vector<bool> visited(nodes.size(), false);
+    for (int node : eulerianTour) {
+        if (!visited[node]) {
+            hamiltonianTour.push_back(node);
+            visited[node] = true;
+        }
+    }
+
+
+
+    return hamiltonianTour;
+}
+
+
+
 
 

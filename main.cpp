@@ -13,11 +13,11 @@ int main() {
     graph_medium = l.load_medium(500);
     vector<int> a = graph_toy.Backtracking();
     auto start = std::chrono::high_resolution_clock::now();
-    vector<int> d = graph_medium.NearstNeighbor();
+    vector<int> d = graph_medium.NearestNeighbor();
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     auto dura = duration.count();
-    vector<int> b = graph_toy.NearstNeighbor();
+    vector<int> b = graph_toy.TSPApproximation();
     double c = graph_toy.ratioBetweentwopaths(a,b);
     return 0;
 }
