@@ -103,6 +103,80 @@ int Graph::diameter() {
     return max;
 }
 
+const Node& Graph::getNode(int index) const {
+    return nodes[index];
+}
+
+int Graph::getNumNodes() const {
+    return nodes.size();
+}
+
+double Graph::distanceBetweenNodes(const Node& node1, const Node& node2){
+    double lat1 = node1.latitude;
+    double lon1 = node1.longitude;
+    double lat2 = node2.latitude;
+    double lon2 = node2.longitude;
+
+    // Convert degrees to radians
+    double lat1Rad = lat1 * M_PI / 180.0;
+    double lon1Rad = lon1 * M_PI / 180.0;
+    double lat2Rad = lat2 * M_PI / 180.0;
+    double lon2Rad = lon2 * M_PI / 180.0;
+
+    // Calculate the distance using the Haversine formula
+    double dlon = lon2Rad - lon1Rad;
+    double dlat = lat2Rad - lat1Rad;
+    double a = pow(sin(dlat / 2), 2) + cos(lat1Rad) * cos(lat2Rad) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = c * 6371;  // Earth's radius in kilometers
+
+    return distance;
+}
+
+double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
+    if(opt[0]!=test[0] && opt.size() != test.size()){
+        return -1;
+    }
+    int start = opt[0];
+    double distance_opt=0;
+    double distance_test=0;
+    int current = start;
+    for(int i=1;i<opt.size();i++){
+        for(auto e : nodes[current].adj){
+            if(e.dest==opt[i]){
+                distance_opt = distance_opt + e.weight;
+                break;
+            }
+        }
+        current=opt[i];
+    }
+    for(auto e : nodes[current].adj){
+        if(e.dest==start){
+            distance_opt = distance_opt + e.weight;
+            break;
+        }
+    }
+
+    current = start;
+    for(int i=1;i<test.size();i++){
+        for(auto e : nodes[current].adj){
+            if(e.dest==opt[i]){
+                distance_test = distance_test + e.weight;
+                break;
+            }
+        }
+        current=opt[i];
+    }
+    for(auto e : nodes[current].adj){
+        if(e.dest==start){
+            distance_test = distance_test + e.weight;
+            break;
+        }
+    }
+    return distance_test/distance_opt;
+}
+
+//O(n!)
 std::vector<int> Graph::Backtracking() {
     int numNodes = getNumNodes();
 
@@ -140,3 +214,54 @@ void Graph::BacktrackingUtil(int current, int count, double cost, double& minCos
 
     nodes[current].visited = false;
 }
+
+//O(n2)
+std::vector<int> Graph::TSPApproximation() {
+    int numNodes = getNumNodes();
+
+    std::vector<int> path(numNodes);
+    std::vector<bool> visited(numNodes, false);
+
+    int currentNode = 0; // Start from node 0
+    visited[currentNode] = true;
+    path[0] = currentNode;
+
+    for (int i = 1; i < numNodes; ++i) {
+        int nearestNeighbor = -1;
+        double minDistance = std::numeric_limits<double>::max();
+
+        for (const auto& edge : nodes[currentNode].adj) {
+            int neighbor = edge.dest;
+            double distance;
+            if (nodes[currentNode].latitude != 0 && edge.weight == 0) {
+                distance = distanceBetweenNodes(nodes[currentNode], nodes[neighbor]);
+            } else {
+                distance = edge.weight;
+            }
+            if (!visited[neighbor] && distance < minDistance) {
+                minDistance = distance;
+                nearestNeighbor = neighbor;
+            }
+        }
+
+        if (nearestNeighbor == -1) {
+            // Handle the case where all neighboring nodes are visited
+            // Choose the unvisited node with the minimum distance from the current node
+            minDistance = std::numeric_limits<double>::max();
+            for (int j = 0; j < numNodes; ++j) {
+                if (!visited[j] && distanceBetweenNodes(nodes[currentNode], nodes[j]) < minDistance) {
+                    minDistance = distanceBetweenNodes(nodes[currentNode], nodes[j]);
+                    nearestNeighbor = j;
+                }
+            }
+        }
+
+        currentNode = nearestNeighbor;
+        visited[currentNode] = true;
+        path[i] = currentNode;
+    }
+
+    return path;
+}
+
+

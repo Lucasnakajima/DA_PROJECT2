@@ -11,6 +11,8 @@
 #include <iostream>
 #include <stack>
 #include <limits>
+#include <chrono>
+#include <cmath>
 
 using namespace std;
 
@@ -52,16 +54,15 @@ public:
     int distance(int a, int b);
     int diameter();
 
-    const Node& getNode(int index) const {
-        return nodes[index];
-    }
+    const Node& getNode(int index) const ;
+    double distanceBetweenNodes(const Node& node1, const Node& node2);
 
-    int getNumNodes() const {
-        return nodes.size();
-    }
+    int getNumNodes() const;
 
     void BacktrackingUtil(int current, int count, double cost, double& minCost, std::vector<int>& path);
     std::vector<int> Backtracking();
+    std::vector<int> TSPApproximation();
+    double ratioBetweentwopaths(vector<int>opt, vector<int>test);
 };
 
 
