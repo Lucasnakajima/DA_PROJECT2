@@ -3,8 +3,9 @@
 #include <locale>
 #include <algorithm>
 #include <string>
+#include <climits>
 
-using namespace std;
+ using namespace std;
 Menu::Menu() {
     run();
 }
@@ -126,8 +127,8 @@ void Menu::run() {
                 cout << "Invalid Input !";
                 pause();
         }
-        if(10<choice or choice>14) algomenu(graph_toy, backtracking);
-        else if (21<=choice or choice>=23) algomenu(graph_medium, backtracking);
+        if(10<choice and choice<14) algomenu(graph_toy, backtracking);
+        else if (31<=choice and choice<=42) algomenu(graph_medium, backtracking);
         else algomenu(graph_real, backtracking);
     }
 }
@@ -145,7 +146,7 @@ void Menu::algomenu(Graph g, bool flag){
                 "||===============================================||\n"
                 "Choose an option: ";
         cin >> choice;
-        vector<int> values = {0, 1, 2, 3};
+        vector<int> values = {0, 1, 2, 3, 4};
         vector<int> a;
         vector<int> b;
         double c;
@@ -173,14 +174,14 @@ void Menu::algomenu(Graph g, bool flag){
                 pause();
                 break;
             case 3:
-                a = g.NearestNeighbor();
+                a = g.DivideConquerClusteredNN();
                 cout << "This is the Nearest Neighbor path for the graph:\n";
                 printPath(a);
                 pause();
                 break;
             case 4:
                 a = g.TSPApproximation();
-                b = g.NearestNeighbor();
+                b = g.DivideConquerClusteredNN();
                 c = g.ratioBetweentwopaths(a,b);
                 cout << "The ratio between the 2-approximation algorithm and the Nearest Neighbor algorithm is: " << c;
                 pause();
@@ -192,9 +193,11 @@ void Menu::algomenu(Graph g, bool flag){
 }
 
 void Menu::printPath(vector<int> v){
-    for(int i : v){
-        cout << "-> " << i << " ";
+    cout << 0 << " ";
+    for(int i=1; i<v.size(); i++){
+        cout << "-> " << v[i] << " ";
     }
+    cout << "-> " << 0 ;
 }
 
 bool Menu:: inputTest(char choice ,vector<int> values) {

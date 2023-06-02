@@ -261,14 +261,13 @@ void Graph::BacktrackingUtil(int current, int count, double cost, double& minCos
     nodes[current].visited = false;
 }
 
-//O(n2)
-std::vector<int> Graph::NearestNeighbor() {
-    int numNodes = getNumNodes();
 
-    std::vector<int> path(numNodes);
-    std::vector<bool> visited(numNodes, false);
-
-    int currentNode = 0; // Start from node 0
+//O(k^2 * n^3), where k is the number of clusters and n is the average size of each cluster
+std::vector<int> Graph::NearestNeighbor(const vector<int>& cluster, bool returnToStart) {
+    int numNodes = cluster.size();
+    std::vector<int> path(numNodes + (returnToStart ? 1 : 0));
+    std::vector<bool> visited(getNumNodes(), false);
+    int currentNode = cluster[0]; // Start from the first node in the cluster
     visited[currentNode] = true;
     path[0] = currentNode;
 
@@ -278,27 +277,13 @@ std::vector<int> Graph::NearestNeighbor() {
 
         for (const auto& edge : nodes[currentNode].adj) {
             int neighbor = edge.dest;
-            double distance;
-            if (nodes[currentNode].latitude != 0 && edge.weight == 0) {
-                distance = Haversine(nodes[currentNode], nodes[neighbor]);
-            } else {
-                distance = edge.weight;
-            }
+            // We only consider neighbors that are in the cluster
+            if (std::find(cluster.begin(), cluster.end(), neighbor) == cluster.end()) continue;
+
+            double distance = edge.weight;
             if (!visited[neighbor] && distance < minDistance) {
                 minDistance = distance;
                 nearestNeighbor = neighbor;
-            }
-        }
-
-        if (nearestNeighbor == -1) {
-            // Handle the case where all neighboring nodes are visited
-            // Choose the unvisited node with the minimum distance from the current node
-            minDistance = std::numeric_limits<double>::max();
-            for (int j = 0; j < numNodes; ++j) {
-                if (!visited[j] && Haversine(nodes[currentNode], nodes[j]) < minDistance) {
-                    minDistance = Haversine(nodes[currentNode], nodes[j]);
-                    nearestNeighbor = j;
-                }
             }
         }
 
@@ -307,8 +292,101 @@ std::vector<int> Graph::NearestNeighbor() {
         path[i] = currentNode;
     }
 
+    // Return to the start node if specified
+    if (returnToStart) {
+        path[numNodes] = cluster[0];
+    }
+
     return path;
 }
+
+std::vector<int> Graph::DivideConquerClusteredNN() {
+    int k = 5; // Number of clusters. You can experiment with different values.
+    std::vector<Cluster> clusters = clusterNodes(k);
+
+    std::vector<int> path;
+    for (const auto& cluster : clusters) {
+        // Generate a path for each cluster using NearestNeighbor
+        std::vector<int> clusterPath = NearestNeighbor(cluster.nodes, false);
+        if(path.empty()){
+            path.insert(path.end(), clusterPath.begin(), clusterPath.end());
+        }
+        else{
+            path = connectPaths(path, clusterPath);
+        }
+    }
+
+    rotate(path.begin(), std::find(path.begin(), path.end(),0), path.end());
+
+    return path;
+}
+
+
+
+
+std::vector<int> Graph::connectPaths(std::vector<int>& path1, std::vector<int>& path2) {
+    double minDistance = std::numeric_limits<double>::max();
+    int connectingNodePath1 = -1;
+    int connectingNodePath2 = -1;
+
+    // Iterate through all nodes in path1
+    for (int i = 0; i < path1.size(); ++i) {
+        int node1 = path1[i];
+
+        // Iterate through all nodes in path2
+        for (int j = 0; j < path2.size(); ++j) {
+            int node2 = path2[j];
+
+            // Iterate through all edges of node1
+            for (const auto& edge : nodes[node1].adj) {
+                if (edge.dest == node2 && edge.weight < minDistance) {
+                    minDistance = edge.weight;
+                    connectingNodePath1 = i;
+                    connectingNodePath2 = j;
+                }
+            }
+        }
+    }
+
+    // No connecting edge found
+    if (connectingNodePath1 == -1 || connectingNodePath2 == -1) {
+        throw std::logic_error("No connecting edge between clusters");
+    }
+
+    // Reorder path1 and path2 so that the connecting nodes are at the end of path1 and the start of path2
+    std::rotate(path1.begin(), path1.begin() + connectingNodePath1+1, path1.end());
+    std::rotate(path2.begin(), path2.begin() + connectingNodePath2, path2.end());
+
+    // Connect path1 and path2
+    path1.insert(path1.end(), path2.begin(), path2.end());
+
+    return path1;
+}
+
+vector<Cluster> Graph::clusterNodes(int k) {
+    vector<Cluster> clusters(k);
+
+    // Get the degree of each node (i.e., count of their edges)
+    vector<pair<int, int>> nodeDegrees;  // first = node index, second = degree
+    for (int i = 0; i < getNumNodes(); ++i) {
+        nodeDegrees.push_back(make_pair(i, nodes[i].adj.size()));
+    }
+
+    // Sort nodes by their degree in descending order
+    sort(nodeDegrees.begin(), nodeDegrees.end(), [](const pair<int, int>& a, const pair<int, int>& b){
+        return a.second > b.second;
+    });
+
+    // Iteratively assign each node to a cluster
+    int clusterIndex = 0;
+    for (const auto& nodeDegree : nodeDegrees) {
+        clusters[clusterIndex].nodes.push_back(nodeDegree.first);
+        clusterIndex = (clusterIndex + 1) % k;  // Round robin assignment
+    }
+
+    return clusters;
+}
+
 
 
 //O(n^2 log n)

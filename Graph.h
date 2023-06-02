@@ -18,6 +18,10 @@
 
 using namespace std;
 
+
+struct Cluster {
+    vector<int> nodes; // Indices of nodes in the cluster
+};
 struct Edge {
     int ori;
     int dest;   // Destination node
@@ -42,7 +46,7 @@ class Graph {
 
 public:
     vector<Node> nodes;
-
+    vector<Cluster> clusterNodes(int k);
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int num, bool dir = false);
 
@@ -76,13 +80,15 @@ public:
     std::vector<Edge> duplicateEdges(const std::vector<Edge>& edges);
     std::vector<int> removeDuplicateNodes(const std::vector<int>& eulerianTour);
     std::vector<int> findEulerianTour(const std::vector<Edge>& edges);
+    std::vector<int> connectPaths(std::vector<int>& path1, std::vector<int>& path2);
+    std::vector<int> NearestNeighbor(const vector<int>& cluster, bool returnToStart);
+    std::vector<int> DivideConquerClusteredNN();
 
     std::vector<Edge> minimumSpanningTreeForComponent(int startNode, std::vector<bool>& visited);
     std::vector<int> findEulerianTourForComponent(const std::vector<int>& component, std::multimap<int, Edge>& edgeMap);
 
     void BacktrackingUtil(int current, int count, double cost, double& minCost, std::vector<int>& path);
     std::vector<int> Backtracking();
-    std::vector<int> NearestNeighbor();
     double ratioBetweentwopaths(vector<int>opt, vector<int>test);
 };
 
