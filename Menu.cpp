@@ -126,8 +126,8 @@ void Menu::run() {
                 cout << "Invalid Input !";
                 pause();
         }
-        if(11<=choice and choice>=13) algomenu(graph_toy, backtracking);
-        else if (21<=choice and choice>=23) algomenu(graph_medium, backtracking);
+        if(10<choice or choice>14) algomenu(graph_toy, backtracking);
+        else if (21<=choice or choice>=23) algomenu(graph_medium, backtracking);
         else algomenu(graph_real, backtracking);
     }
 }
@@ -141,7 +141,7 @@ void Menu::algomenu(Graph g, bool flag){
                 "|| 2-approximation algorithm                 [2] ||\n"
                 "|| Heuristic algorithm                       [3] ||\n"
                 "|| Ratio between algorithms                  [4] ||\n"
-                "|| Exit                                      [0] ||\n"
+                "|| Go back                                   [0] ||\n"
                 "||===============================================||\n"
                 "Choose an option: ";
         cin >> choice;
@@ -193,7 +193,7 @@ void Menu::algomenu(Graph g, bool flag){
 
 void Menu::printPath(vector<int> v){
     for(int i : v){
-        cout << "->" << i << " ";
+        cout << "-> " << i << " ";
     }
 }
 
@@ -214,6 +214,7 @@ bool Menu:: inputTest(char choice ,vector<int> values) {
 }
 
 void Menu::pause() {
+    cout << "\n";
     cout << "Press any key to continue...";
     cin.get();
 }
