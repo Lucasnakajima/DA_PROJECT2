@@ -363,25 +363,66 @@ std::vector<int> Graph::connectPaths(std::vector<int>& path1, std::vector<int>& 
     return path1;
 }
 
-vector<Cluster> Graph::clusterNodes(int k) {
-    vector<Cluster> clusters(k);
+int Graph::findSet(int node, vector<int>& parent) {
+    if (parent[node] == node)
+        return node;
+    return parent[node] = findSet(parent[node], parent);
+}
 
-    // Get the degree of each node (i.e., count of their edges)
-    vector<pair<int, int>> nodeDegrees;  // first = node index, second = degree
-    for (int i = 0; i < getNumNodes(); ++i) {
-        nodeDegrees.push_back(make_pair(i, nodes[i].adj.size()));
+// Function to merge two sets
+void Graph::unionSets(int set1, int set2, vector<int>& parent) {
+    parent[set1] = set2;
+}
+
+
+// hierarchical agglomerative clustering
+vector<Cluster> Graph::clusterNodes(int k) {
+
+    int n = nodes.size();
+    vector<int> parent(n);
+    for (int i = 0; i < n; i++)
+        parent[i] = i;
+
+    // Create a priority queue of edges, sorted by increasing weight
+    priority_queue<Edge, vector<Edge>, EdgeComparator> pq;
+    for (int i = 0; i < n; i++) {
+        for (const Edge& edge : nodes[i].adj) {
+            pq.push(edge);
+        }
     }
 
-    // Sort nodes by their degree in descending order
-    sort(nodeDegrees.begin(), nodeDegrees.end(), [](const pair<int, int>& a, const pair<int, int>& b){
-        return a.second > b.second;
-    });
+    // Merge sets until only k clusters remain
+    int numClusters = n;
+    while (numClusters > k) {
+        Edge edge = pq.top();
+        pq.pop();
+        int set1 = findSet(edge.ori, parent);
+        int set2 = findSet(edge.dest, parent);
+        if (set1 != set2) {
+            unionSets(set1, set2, parent);
+            numClusters--;
+        }
+    }
 
-    // Iteratively assign each node to a cluster
-    int clusterIndex = 0;
-    for (const auto& nodeDegree : nodeDegrees) {
-        clusters[clusterIndex].nodes.push_back(nodeDegree.first);
-        clusterIndex = (clusterIndex + 1) % k;  // Round robin assignment
+    // Create clusters based on the final disjoint sets
+    vector<Cluster> clusters(k);
+    for (int i = 0; i < n; i++) {
+        int set = findSet(i, parent);
+        if(clusters.empty()){
+            clusters[0].nodes.push_back(i);
+        }
+        else{
+            for(int j=0; j<k; j++){
+                if(clusters[j].nodes.empty()){
+                    clusters[j].nodes.push_back(i);
+                    break;
+                }
+                else if(findSet(clusters[j].nodes[0], parent) == set){
+                    clusters[j].nodes.push_back(i);
+                    break;
+                }
+            }
+        }
     }
 
     return clusters;

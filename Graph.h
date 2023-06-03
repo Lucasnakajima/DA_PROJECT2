@@ -74,6 +74,9 @@ public:
 
     int getNumNodes() const;
 
+    int findSet(int node, vector<int>& parent);
+    void unionSets(int set1, int set2, vector<int>& parent);
+
     std::vector<Edge> minimumSpanningTree();
 
     std::vector<int> TSPApproximation();
