@@ -31,11 +31,22 @@ public:
      */
     bool inputTest(char choice, std::vector<int> values);
 
-
+    /**
+     * @brief Pauses the program and waits for user input.
+     */
     void pause();
 
+    /**
+     * @brief Displays the algorithm menu for a given graph and performs the chosen action.
+     * @param g The graph to operate on
+     * @param flag Flag indicating whether backtracking is applicable for the graph
+     */
     void algomenu(Graph g, bool flag);
 
+    /**
+     * @brief Prints a path represented by a vector of integers.
+     * @param v The vector representing the path
+     */
     void printPath(vector<int> v);
 };
 

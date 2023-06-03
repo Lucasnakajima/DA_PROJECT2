@@ -16,8 +16,26 @@ using namespace std;
 
 class load_graphs {
 public:
+    /**
+     * @brief Loads station and connection data from a CSV file into a graph object.
+     * @param filename The name of the CSV file to load
+     * @return Graph The loaded graph object
+     */
     Graph load_toy(string filename);
+
+    /**
+     * @brief Loads real-world station and connection data from CSV files into a graph object.
+     * @param graph The name of the graph directory containing the CSV files
+     * @return Graph The loaded graph object
+     */
     Graph load_real(string graph);
+
+
+    /**
+     * @brief Loads medium-sized graph data from a CSV file into a graph object.
+     * @param num The number of nodes in the graph
+     * @return Graph The loaded graph object
+     */
     Graph load_medium(int num);
 };
 
