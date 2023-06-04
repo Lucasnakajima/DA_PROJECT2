@@ -50,23 +50,19 @@ void Menu::run() {
                 "||==================================================================================================================||\n"
                 "Choose an option: ";
         int choice;
-        bool backtracking=false;
-        vector<int> values = {0,11,12,13,21,22,23,31,32,33,34,35,36,37,38,39,40,41};
+        vector<int> values = {0,11,12,13,21,22,23,31,32,33,34,35,36,37,38,39,40,41,42};
         cin >> choice;
         if(!inputTest(choice,values)) continue;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch(choice){
             case 11:
                 graph_toy = l.load_toy("shipping.csv");
-                backtracking=true;
                 break;
             case 12:
                 graph_toy = l.load_toy("stadiums.csv");
-                backtracking=true;
                 break;
             case 13:
                 graph_toy = l.load_toy("tourism.csv");
-                backtracking=true;
                 break;
             case 21:
                 graph_real = l.load_real("graph1");
@@ -127,28 +123,33 @@ void Menu::run() {
                 cout << "Invalid Input !";
                 pause();
         }
-        if(10<choice and choice<14) algomenu(graph_toy, backtracking);
-        else if (31<=choice and choice<=42) algomenu(graph_medium, backtracking);
-        else algomenu(graph_real, backtracking);
+        if(10<choice and choice<14) algomenu(graph_toy, "toy");
+        else if (31<=choice and choice<=42) algomenu(graph_medium, "medium");
+        else algomenu(graph_real, "real");
     }
 }
 
-void Menu::algomenu(Graph g, bool flag){
+void Menu::algomenu(Graph g, string flag){
     int choice;
     while(true) {
-        cout << "||===============================================||\n"
-                "|| Choose the action you want to perform:        ||\n"
-                "|| Backtracking (Toy graphs only)            [1] ||\n"
-                "|| 2-approximation algorithm                 [2] ||\n"
-                "|| Heuristic algorithm                       [3] ||\n"
-                "|| Ratio between algorithms                  [4] ||\n"
-                "|| Go back                                   [0] ||\n"
-                "||===============================================||\n"
+        cout << "||=====================================================||\n"
+                "|| Choose the action you want to perform:              ||\n"
+                "|| Backtracking (Toy graphs only)                  [1] ||\n"
+                "|| 2-approximation algorithm                       [2] ||\n"
+                "|| Heuristic algorithm                             [3] ||\n"
+                "|| Ratio between algorithms (not for real graphs)  [4] ||\n"
+                "|| Go back                                         [0] ||\n"
+                "||=====================================================||\n"
                 "Choose an option: ";
         cin >> choice;
         vector<int> values = {0, 1, 2, 3, 4};
         vector<int> a;
         vector<int> b;
+        double w;
+        auto start = std::chrono::high_resolution_clock::now();
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        long long dura;
         double c;
         if (!inputTest(choice, values)) continue;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -156,34 +157,82 @@ void Menu::algomenu(Graph g, bool flag){
             case 0:
                 return;
             case 1:
-                if(flag){
+                if(flag == "toy"){
+                    start = std::chrono::high_resolution_clock::now();
                     a = g.Backtracking();
+                    end = std::chrono::high_resolution_clock::now();
+                    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                    dura = duration.count();
+                    w = g.pathWeight(a);
                     cout << "This is the best path for the graph using the backtracking algorithm:\n";
                     printPath(a);
+                    cout << "\nThe total duration is: " << dura << " ms\n";
+                    cout << "The total distance is: " << w << "\n";
                     pause();
                 }
                 else{
-                    cout << "As this is not a to graph, backtracking cannot be performed in a timely manner.";
+                    cout << "As this is not a toy graph, backtracking cannot be performed in a timely manner!";
                     pause();
                 };
                 break;
             case 2:
+                start = std::chrono::high_resolution_clock::now();
                 a = g.TSPApproximation();
+                end = std::chrono::high_resolution_clock::now();
+                duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                dura = duration.count();
+                w = g.pathWeight(a);
                 cout << "This is the 2-approximation path for the graph:\n";
                 printPath(a);
+                cout << "\nThe total duration is: " << dura << " ms\n";
+                cout << "The total distance is: " << w << "\n";
                 pause();
                 break;
             case 3:
+                if(flag == "real"){
+                    cout << "Unfortunately the heuristic algorithm only works for fully connected graphs...";
+                    break;
+                }
+                start = std::chrono::high_resolution_clock::now();
                 a = g.DivideConquerClusteredNN();
+                end = std::chrono::high_resolution_clock::now();
+                duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                dura = duration.count();
+                w = g.pathWeight(a);
                 cout << "This is the Nearest Neighbor path for the graph:\n";
                 printPath(a);
+                cout << "\nThe total duration is: " << dura << " ms\n";
+                cout << "The total distance is: " << w << "\n";
                 pause();
                 break;
             case 4:
-                a = g.TSPApproximation();
-                b = g.DivideConquerClusteredNN();
+                if(flag == "real"){
+                    cout << "Unfortunately the heuristic algorithm only works for fully connected graphs and Backtracking can´t be performed in a timely manner in the real graphs.";
+                    break;
+                }
+                cout << "Choose the action you want to perform:\n"
+                        "*Backtracking vs 2-approximation   [1]\n"
+                        "*2-approximation vs heuristic      [2]\n"
+                        "Choose an option:";
+                cin >> choice;
+                if (!inputTest(choice, {1,2})) break;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                if(choice == 1){
+                    if(flag == "medium"){
+                        cout << "As this is not a toy graph, backtracking cannot be performed in a timely manner!\n";
+                        break;
+                    }
+                    a = g.Backtracking();
+                    b = g.DivideConquerClusteredNN();
+                }
+                else{
+                    a = g.TSPApproximation();
+                    b = g.DivideConquerClusteredNN();
+                }
+
                 c = g.ratioBetweentwopaths(a,b);
-                cout << "The ratio between the 2-approximation algorithm and the Nearest Neighbor algorithm is: " << c;
+                cout << "The ratio between the 2 algorithms is: " << c << "\n";
                 pause();
                 break;
             default:

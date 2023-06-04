@@ -160,6 +160,37 @@ double Graph::Haversine(const Node& node1, const Node& node2){
     return distance;
 }
 
+double Graph::pathWeight(vector<int> opt){
+    int start = opt[0];
+    double distance_opt=0;
+    bool is_h = true;
+    int current = start;
+    for(int i=1;i<opt.size();i++){
+        is_h = true;
+        for(auto e : nodes[current].adj){
+            if(e.dest==opt[i]){
+                distance_opt = distance_opt + e.weight;
+                is_h = false;
+                break;
+            }
+        }
+        if(!is_h){
+            current = opt[i];
+        }
+        else {
+            distance_opt = distance_opt + Haversine(nodes[current], nodes[opt[i]]);
+            current = opt[i];
+        }
+    }
+    for(auto e : nodes[current].adj){
+        if(e.dest==start){
+            distance_opt = distance_opt + e.weight;
+            break;
+        }
+    }
+
+    return distance_opt;
+}
 
 double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
     if(opt[0]!=test[0] && opt.size() != test.size()){
@@ -183,7 +214,7 @@ double Graph::ratioBetweentwopaths(vector<int> opt, vector<int> test) {
             current = opt[i];
         }
         else {
-            distance_test = distance_test + Haversine(nodes[current], nodes[opt[i]]);
+            distance_opt = distance_opt + Haversine(nodes[current], nodes[opt[i]]);
             current = opt[i];
         }
     }

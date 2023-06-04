@@ -41,13 +41,15 @@ public:
      * @param g The graph to operate on
      * @param flag Flag indicating whether backtracking is applicable for the graph
      */
-    void algomenu(Graph g, bool flag);
+    void algomenu(Graph g, string flag);
 
     /**
      * @brief Prints a path represented by a vector of integers.
      * @param v The vector representing the path
      */
     void printPath(vector<int> v);
+
+
 };
 
 
