@@ -1,0 +1,623 @@
+\hypertarget{class_graph}{}\doxysection{Graph Class Reference}
+\label{class_graph}\index{Graph@{Graph}}
+
+
+Class representing a graph.  
+
+
+
+
+{\ttfamily \#include $<$Graph.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \mbox{\hyperlink{struct_cluster}{Cluster}} $>$ \mbox{\hyperlink{class_graph_a643eaa59681a06e9499ab187ab04ee3b}{cluster\+Nodes}} (int k)
+\begin{DoxyCompactList}\small\item\em Performs hierarchical agglomerative clustering to partition the nodes into k clusters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_graph_a5a87823738d34d7ae4457da4b83430d7}{Graph}} (int num, bool dir=false)
+\begin{DoxyCompactList}\small\item\em Constructs a graph with a specified number of nodes and directionality. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_graph_a9ef9fccc1ebae1374a6d8adff93166f0}{Graph}} (bool dir=false)
+\begin{DoxyCompactList}\small\item\em Constructs a graph with optional directionality. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_a982e21d86e6760caa4dc901091103a2c}{add\+Edge}} (int src, int dest, int weight)
+\begin{DoxyCompactList}\small\item\em Adds an edge from source to destination with a certain weight. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_af75708e2193dba6335eced1db39b9846}{add\+Edgewithout\+Nodes}} (int src, int dest, int weight=1)
+\begin{DoxyCompactList}\small\item\em Adds an edge from source to destination with a certain weight. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_af81888a45922aa1839fe0262bd0ca7b3}{dfs}} (int v)
+\begin{DoxyCompactList}\small\item\em Performs depth-\/first search on the graph starting from node \textquotesingle{}v\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_a556b46f10cd2f39a0a871b9304808199}{dfs\+\_\+connected}} (int v, std\+::vector$<$ bool $>$ \&visited, std\+::vector$<$ int $>$ \&component)
+\begin{DoxyCompactList}\small\item\em Recursive function for Depth-\/first search to find all nodes in the same connected component as node \textquotesingle{}v\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_ae1e45e27c60711dadec619ca17e830a4}{bfs}} (int v)
+\begin{DoxyCompactList}\small\item\em Performs breadth-\/first search on the graph starting from node \textquotesingle{}v\textquotesingle{}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_a7355a8f413625187e8dafd50ab0223f1}{maxbfs}} (int v)
+\begin{DoxyCompactList}\small\item\em Performs a modified breadth-\/first search from the given node, tracking the maximum distance achieved. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_a5a816844b989c28c01b97015ab8868e4}{distance}} (int a, int b)
+\begin{DoxyCompactList}\small\item\em Computes the shortest distance between two nodes in the graph using Breadth-\/\+First Search (BFS) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_a6fc336837e93d78a359a21778cbf7c8f}{diameter}} ()
+\begin{DoxyCompactList}\small\item\em Computes the diameter of the graph, which is the longest shortest-\/path distance among all pairs of nodes. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{class_graph_a9e4804b391f443b4e1d75ca8937bac15}{find\+Connected\+Components}} ()
+\begin{DoxyCompactList}\small\item\em Finds connected components in the graph. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{struct_node}{Node}} \& \mbox{\hyperlink{class_graph_ab32329b8b5e5aeae7cc2de0adcc755e4}{get\+Node}} (int index) const
+\begin{DoxyCompactList}\small\item\em Fetches a node object given its index. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_graph_aa3d1f3125cde812bcf852f9c96cd6e4b}{Haversine}} (const \mbox{\hyperlink{struct_node}{Node}} \&node1, const \mbox{\hyperlink{struct_node}{Node}} \&node2)
+\begin{DoxyCompactList}\small\item\em Computes the Haversine distance between two nodes, which is the shortest distance over the earth\textquotesingle{}s surface. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_a6599fb8b94128ff5da7c3cdfbdcf2ed9}{get\+Num\+Nodes}} () const
+\begin{DoxyCompactList}\small\item\em Fetches the number of nodes in the graph. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_graph_a42df38a191837f38dc6e27e04f901fec}{find\+Set}} (int node, vector$<$ int $>$ \&parent)
+\begin{DoxyCompactList}\small\item\em Finds the representative node of the set that the given node belongs to. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_a9068bcec8136ec4ec7c2fdb333cef024}{union\+Sets}} (int set1, int set2, vector$<$ int $>$ \&parent)
+\begin{DoxyCompactList}\small\item\em Merges two disjoint sets into a single set. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \mbox{\hyperlink{class_graph_a5944d8efac5ed35f6218f815e637b020}{minimum\+Spanning\+Tree}} ()
+\begin{DoxyCompactList}\small\item\em Finds the minimum spanning tree of the graph using Prim\textquotesingle{}s algorithm. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_a9f0895ed781e6c0595418828f0d1ee16}{TSPApproximation}} ()
+\begin{DoxyCompactList}\small\item\em Computes an approximate solution to the Traveling Salesman Problem (TSP). \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \mbox{\hyperlink{class_graph_aec1d90bbc73ea33de4367ad35e702c84}{duplicate\+Edges}} (const std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&edges)
+\begin{DoxyCompactList}\small\item\em Duplicates the edges of the minimum spanning tree. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_a72e87075f0c453a129c671eb50934278}{remove\+Duplicate\+Nodes}} (const std\+::vector$<$ int $>$ \&eulerian\+Tour)
+\begin{DoxyCompactList}\small\item\em Removes duplicate nodes from the Eulerian tour to obtain a Hamiltonian tour. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_ac631c185eabe29b38f3dadb95b58aed0}{find\+Eulerian\+Tour}} (const std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&edges)
+\begin{DoxyCompactList}\small\item\em Finds an Eulerian tour in the multigraph formed by duplicating the edges of the minimum spanning tree. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_ae96feac11d71cea7eb7f4ca9ca3a66e9}{connect\+Paths}} (std\+::vector$<$ int $>$ \&path1, std\+::vector$<$ int $>$ \&path2)
+\begin{DoxyCompactList}\small\item\em Connects two paths by finding the minimum-\/weight edge that connects them. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_afabfa6712577fc819dd7c7fbc21015d9}{Nearest\+Neighbor}} (const vector$<$ int $>$ \&cluster, bool return\+To\+Start)
+\begin{DoxyCompactList}\small\item\em Finds the approximate optimal path through the graph using the Nearest Neighbor algorithm. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_a352bbc13322d13fec30ab504b8c26a2c}{Divide\+Conquer\+Clustered\+NN}} ()
+\begin{DoxyCompactList}\small\item\em Performs the Divide and Conquer algorithm to find the optimal path through the clustered graph. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \mbox{\hyperlink{class_graph_a90ba93aaf1cd2b6fd4922656763e8dca}{minimum\+Spanning\+Tree\+For\+Component}} (int start\+Node, std\+::vector$<$ bool $>$ \&visited)
+\begin{DoxyCompactList}\small\item\em Finds the minimum spanning tree for a disconnected component of the graph. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_a82b6d5aeead15f976ecc7468e7083bf5}{find\+Eulerian\+Tour\+For\+Component}} (const std\+::vector$<$ int $>$ \&component, std\+::multimap$<$ int, \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&edge\+Map)
+\begin{DoxyCompactList}\small\item\em Finds an Eulerian tour in the multigraph formed by duplicating the edges of the minimum spanning tree for a disconnected component. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_graph_af89244231d6b044356ed13e11a3e2dab}{Backtracking\+Util}} (int current, int count, double cost, double \&min\+Cost, std\+::vector$<$ int $>$ \&path)
+\begin{DoxyCompactList}\small\item\em Utility function for backtracking to explore all possible paths through the graph. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{class_graph_a40c62ae973beef3d267529ef859f8cac}{Backtracking}} ()
+\begin{DoxyCompactList}\small\item\em Performs backtracking to find the optimal path through the graph. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_graph_aed669c5439699ca27cd67568f1a84567}{ratio\+Betweentwopaths}} (vector$<$ int $>$opt, vector$<$ int $>$test)
+\begin{DoxyCompactList}\small\item\em Computes the ratio of the distances of two paths in the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a71b5e16eb9e0670fea3ecee3526abb41}\label{class_graph_a71b5e16eb9e0670fea3ecee3526abb41}} 
+vector$<$ \mbox{\hyperlink{struct_node}{Node}} $>$ {\bfseries nodes}
+\begin{DoxyCompactList}\small\item\em Vector of nodes in the graph. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class representing a graph. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_graph_a5a87823738d34d7ae4457da4b83430d7}\label{class_graph_a5a87823738d34d7ae4457da4b83430d7}} 
+\index{Graph@{Graph}!Graph@{Graph}}
+\index{Graph@{Graph}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{Graph()}{Graph()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Graph\+::\+Graph (\begin{DoxyParamCaption}\item[{int}]{num,  }\item[{bool}]{dir = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Constructs a graph with a specified number of nodes and directionality. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & The number of nodes in the graph. \\
+\hline
+{\em dir} & The directionality of the graph (default\+: undirected). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a9ef9fccc1ebae1374a6d8adff93166f0}\label{class_graph_a9ef9fccc1ebae1374a6d8adff93166f0}} 
+\index{Graph@{Graph}!Graph@{Graph}}
+\index{Graph@{Graph}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{Graph()}{Graph()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Graph\+::\+Graph (\begin{DoxyParamCaption}\item[{bool}]{dir = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Constructs a graph with optional directionality. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & The directionality of the graph (default\+: undirected). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_graph_a982e21d86e6760caa4dc901091103a2c}\label{class_graph_a982e21d86e6760caa4dc901091103a2c}} 
+\index{Graph@{Graph}!addEdge@{addEdge}}
+\index{addEdge@{addEdge}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{addEdge()}{addEdge()}}
+{\footnotesize\ttfamily void Graph\+::add\+Edge (\begin{DoxyParamCaption}\item[{int}]{src,  }\item[{int}]{dest,  }\item[{int}]{weight }\end{DoxyParamCaption})}
+
+
+
+Adds an edge from source to destination with a certain weight. 
+
+If the graph is undirected, the edge is also added from destination to source
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & Source node \\
+\hline
+{\em dest} & Destination node \\
+\hline
+{\em weight} & Weight of the edge Time Complexity\+: O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_af75708e2193dba6335eced1db39b9846}\label{class_graph_af75708e2193dba6335eced1db39b9846}} 
+\index{Graph@{Graph}!addEdgewithoutNodes@{addEdgewithoutNodes}}
+\index{addEdgewithoutNodes@{addEdgewithoutNodes}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{addEdgewithoutNodes()}{addEdgewithoutNodes()}}
+{\footnotesize\ttfamily void Graph\+::add\+Edgewithout\+Nodes (\begin{DoxyParamCaption}\item[{int}]{src,  }\item[{int}]{dest,  }\item[{int}]{weight = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Adds an edge from source to destination with a certain weight. 
+
+This function doesn\textquotesingle{}t check for existence of nodes in the graph
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & Source node \\
+\hline
+{\em dest} & Destination node \\
+\hline
+{\em weight} & Weight of the edge Time Complexity\+: O(1) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a40c62ae973beef3d267529ef859f8cac}\label{class_graph_a40c62ae973beef3d267529ef859f8cac}} 
+\index{Graph@{Graph}!Backtracking@{Backtracking}}
+\index{Backtracking@{Backtracking}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{Backtracking()}{Backtracking()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::\+Backtracking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Performs backtracking to find the optimal path through the graph. 
+
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The optimal path through the graph. Time Complexity\+: O(n!) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_af89244231d6b044356ed13e11a3e2dab}\label{class_graph_af89244231d6b044356ed13e11a3e2dab}} 
+\index{Graph@{Graph}!BacktrackingUtil@{BacktrackingUtil}}
+\index{BacktrackingUtil@{BacktrackingUtil}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{BacktrackingUtil()}{BacktrackingUtil()}}
+{\footnotesize\ttfamily void Graph\+::\+Backtracking\+Util (\begin{DoxyParamCaption}\item[{int}]{current,  }\item[{int}]{count,  }\item[{double}]{cost,  }\item[{double \&}]{min\+Cost,  }\item[{std\+::vector$<$ int $>$ \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Utility function for backtracking to explore all possible paths through the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current} & The current node being visited. \\
+\hline
+{\em count} & The number of nodes visited so far. \\
+\hline
+{\em cost} & The cost of the current path. \\
+\hline
+{\em min\+Cost} & The minimum cost found so far. \\
+\hline
+{\em path} & The current path being explored. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_ae1e45e27c60711dadec619ca17e830a4}\label{class_graph_ae1e45e27c60711dadec619ca17e830a4}} 
+\index{Graph@{Graph}!bfs@{bfs}}
+\index{bfs@{bfs}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{bfs()}{bfs()}}
+{\footnotesize\ttfamily void Graph\+::bfs (\begin{DoxyParamCaption}\item[{int}]{v }\end{DoxyParamCaption})}
+
+
+
+Performs breadth-\/first search on the graph starting from node \textquotesingle{}v\textquotesingle{}. 
+
+Also, calculates the distance of all nodes from node \textquotesingle{}v\textquotesingle{} in terms of the number of edges
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{struct_node}{Node}} to start the search from Time Complexity\+: O(V+E) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a643eaa59681a06e9499ab187ab04ee3b}\label{class_graph_a643eaa59681a06e9499ab187ab04ee3b}} 
+\index{Graph@{Graph}!clusterNodes@{clusterNodes}}
+\index{clusterNodes@{clusterNodes}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{clusterNodes()}{clusterNodes()}}
+{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{struct_cluster}{Cluster}} $>$ Graph\+::cluster\+Nodes (\begin{DoxyParamCaption}\item[{int}]{k }\end{DoxyParamCaption})}
+
+
+
+Performs hierarchical agglomerative clustering to partition the nodes into k clusters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em k} & The number of clusters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$\+Cluster$>$ The clusters obtained from the clustering. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_ae96feac11d71cea7eb7f4ca9ca3a66e9}\label{class_graph_ae96feac11d71cea7eb7f4ca9ca3a66e9}} 
+\index{Graph@{Graph}!connectPaths@{connectPaths}}
+\index{connectPaths@{connectPaths}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{connectPaths()}{connectPaths()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::connect\+Paths (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{path1,  }\item[{std\+::vector$<$ int $>$ \&}]{path2 }\end{DoxyParamCaption})}
+
+
+
+Connects two paths by finding the minimum-\/weight edge that connects them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path1} & The first path. \\
+\hline
+{\em path2} & The second path. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The connected path. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_af81888a45922aa1839fe0262bd0ca7b3}\label{class_graph_af81888a45922aa1839fe0262bd0ca7b3}} 
+\index{Graph@{Graph}!dfs@{dfs}}
+\index{dfs@{dfs}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{dfs()}{dfs()}}
+{\footnotesize\ttfamily void Graph\+::dfs (\begin{DoxyParamCaption}\item[{int}]{v }\end{DoxyParamCaption})}
+
+
+
+Performs depth-\/first search on the graph starting from node \textquotesingle{}v\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{struct_node}{Node}} to start the search from Time Complexity\+: O(V+E) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a556b46f10cd2f39a0a871b9304808199}\label{class_graph_a556b46f10cd2f39a0a871b9304808199}} 
+\index{Graph@{Graph}!dfs\_connected@{dfs\_connected}}
+\index{dfs\_connected@{dfs\_connected}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{dfs\_connected()}{dfs\_connected()}}
+{\footnotesize\ttfamily void Graph\+::dfs\+\_\+connected (\begin{DoxyParamCaption}\item[{int}]{v,  }\item[{std\+::vector$<$ bool $>$ \&}]{visited,  }\item[{std\+::vector$<$ int $>$ \&}]{component }\end{DoxyParamCaption})}
+
+
+
+Recursive function for Depth-\/first search to find all nodes in the same connected component as node \textquotesingle{}v\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \mbox{\hyperlink{struct_node}{Node}} to start the search from \\
+\hline
+{\em visited} & Vector to keep track of visited nodes \\
+\hline
+{\em component} & Vector to keep track of nodes in the same connected component Time Complexity\+: O(V+E) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_graph_a6fc336837e93d78a359a21778cbf7c8f}\label{class_graph_a6fc336837e93d78a359a21778cbf7c8f}} 
+\index{Graph@{Graph}!diameter@{diameter}}
+\index{diameter@{diameter}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{diameter()}{diameter()}}
+{\footnotesize\ttfamily int Graph\+::diameter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Computes the diameter of the graph, which is the longest shortest-\/path distance among all pairs of nodes. 
+
+\begin{DoxyReturn}{Returns}
+int The diameter of the graph, or -\/1 if the graph is not connected Time Complexity\+: O(V$\ast$(V+E)) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a5a816844b989c28c01b97015ab8868e4}\label{class_graph_a5a816844b989c28c01b97015ab8868e4}} 
+\index{Graph@{Graph}!distance@{distance}}
+\index{distance@{distance}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{distance()}{distance()}}
+{\footnotesize\ttfamily int Graph\+::distance (\begin{DoxyParamCaption}\item[{int}]{a,  }\item[{int}]{b }\end{DoxyParamCaption})}
+
+
+
+Computes the shortest distance between two nodes in the graph using Breadth-\/\+First Search (BFS) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The starting node \\
+\hline
+{\em b} & The ending node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The shortest distance between the nodes Time Complexity\+: O(V+E) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a352bbc13322d13fec30ab504b8c26a2c}\label{class_graph_a352bbc13322d13fec30ab504b8c26a2c}} 
+\index{Graph@{Graph}!DivideConquerClusteredNN@{DivideConquerClusteredNN}}
+\index{DivideConquerClusteredNN@{DivideConquerClusteredNN}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{DivideConquerClusteredNN()}{DivideConquerClusteredNN()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::\+Divide\+Conquer\+Clustered\+NN (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Performs the Divide and Conquer algorithm to find the optimal path through the clustered graph. 
+
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The optimal path through the clustered graph. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_aec1d90bbc73ea33de4367ad35e702c84}\label{class_graph_aec1d90bbc73ea33de4367ad35e702c84}} 
+\index{Graph@{Graph}!duplicateEdges@{duplicateEdges}}
+\index{duplicateEdges@{duplicateEdges}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{duplicateEdges()}{duplicateEdges()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ Graph\+::duplicate\+Edges (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&}]{edges }\end{DoxyParamCaption})}
+
+
+
+Duplicates the edges of the minimum spanning tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edges} & The edges of the minimum spanning tree. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$\+Edge$>$ The duplicated edges. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a9e4804b391f443b4e1d75ca8937bac15}\label{class_graph_a9e4804b391f443b4e1d75ca8937bac15}} 
+\index{Graph@{Graph}!findConnectedComponents@{findConnectedComponents}}
+\index{findConnectedComponents@{findConnectedComponents}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findConnectedComponents()}{findConnectedComponents()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::vector$<$ int $>$ $>$ Graph\+::find\+Connected\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Finds connected components in the graph. 
+
+\begin{DoxyReturn}{Returns}
+vector$<$std\+::vector$<$int$>$$>$ Vector of vectors, each containing nodes belonging to one connected component Time Complexity\+: O(V+E) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_ac631c185eabe29b38f3dadb95b58aed0}\label{class_graph_ac631c185eabe29b38f3dadb95b58aed0}} 
+\index{Graph@{Graph}!findEulerianTour@{findEulerianTour}}
+\index{findEulerianTour@{findEulerianTour}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findEulerianTour()}{findEulerianTour()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::find\+Eulerian\+Tour (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&}]{edges }\end{DoxyParamCaption})}
+
+
+
+Finds an Eulerian tour in the multigraph formed by duplicating the edges of the minimum spanning tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em edges} & The duplicated edges. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The nodes visited in the Eulerian tour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a82b6d5aeead15f976ecc7468e7083bf5}\label{class_graph_a82b6d5aeead15f976ecc7468e7083bf5}} 
+\index{Graph@{Graph}!findEulerianTourForComponent@{findEulerianTourForComponent}}
+\index{findEulerianTourForComponent@{findEulerianTourForComponent}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findEulerianTourForComponent()}{findEulerianTourForComponent()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::find\+Eulerian\+Tour\+For\+Component (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{component,  }\item[{std\+::multimap$<$ int, \mbox{\hyperlink{struct_edge}{Edge}} $>$ \&}]{edge\+Map }\end{DoxyParamCaption})}
+
+
+
+Finds an Eulerian tour in the multigraph formed by duplicating the edges of the minimum spanning tree for a disconnected component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em component} & The component of nodes to find the Eulerian tour for. \\
+\hline
+{\em edge\+Map} & The multimap of edges for each node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The nodes visited in the Eulerian tour for the component. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a42df38a191837f38dc6e27e04f901fec}\label{class_graph_a42df38a191837f38dc6e27e04f901fec}} 
+\index{Graph@{Graph}!findSet@{findSet}}
+\index{findSet@{findSet}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{findSet()}{findSet()}}
+{\footnotesize\ttfamily int Graph\+::find\+Set (\begin{DoxyParamCaption}\item[{int}]{node,  }\item[{vector$<$ int $>$ \&}]{parent }\end{DoxyParamCaption})}
+
+
+
+Finds the representative node of the set that the given node belongs to. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The node to find the representative for. \\
+\hline
+{\em parent} & The parent array representing the disjoint sets. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The representative node of the set. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_ab32329b8b5e5aeae7cc2de0adcc755e4}\label{class_graph_ab32329b8b5e5aeae7cc2de0adcc755e4}} 
+\index{Graph@{Graph}!getNode@{getNode}}
+\index{getNode@{getNode}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getNode()}{getNode()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{struct_node}{Node}} \& Graph\+::get\+Node (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption}) const}
+
+
+
+Fetches a node object given its index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the desired node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const \mbox{\hyperlink{struct_node}{Node}}\& The requested node Time Complexity\+: O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a6599fb8b94128ff5da7c3cdfbdcf2ed9}\label{class_graph_a6599fb8b94128ff5da7c3cdfbdcf2ed9}} 
+\index{Graph@{Graph}!getNumNodes@{getNumNodes}}
+\index{getNumNodes@{getNumNodes}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{getNumNodes()}{getNumNodes()}}
+{\footnotesize\ttfamily int Graph\+::get\+Num\+Nodes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Fetches the number of nodes in the graph. 
+
+\begin{DoxyReturn}{Returns}
+int The number of nodes in the graph Time Complexity\+: O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_aa3d1f3125cde812bcf852f9c96cd6e4b}\label{class_graph_aa3d1f3125cde812bcf852f9c96cd6e4b}} 
+\index{Graph@{Graph}!Haversine@{Haversine}}
+\index{Haversine@{Haversine}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{Haversine()}{Haversine()}}
+{\footnotesize\ttfamily double Graph\+::\+Haversine (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{struct_node}{Node}} \&}]{node1,  }\item[{const \mbox{\hyperlink{struct_node}{Node}} \&}]{node2 }\end{DoxyParamCaption})}
+
+
+
+Computes the Haversine distance between two nodes, which is the shortest distance over the earth\textquotesingle{}s surface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node1} & The first node \\
+\hline
+{\em node2} & The second node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double The Haversine distance between the nodes Time Complexity\+: O(1) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a7355a8f413625187e8dafd50ab0223f1}\label{class_graph_a7355a8f413625187e8dafd50ab0223f1}} 
+\index{Graph@{Graph}!maxbfs@{maxbfs}}
+\index{maxbfs@{maxbfs}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{maxbfs()}{maxbfs()}}
+{\footnotesize\ttfamily int Graph\+::maxbfs (\begin{DoxyParamCaption}\item[{int}]{v }\end{DoxyParamCaption})}
+
+
+
+Performs a modified breadth-\/first search from the given node, tracking the maximum distance achieved. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & The node to start the search from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int Maximum distance achieved during the search, or -\/1 if any node was unreachable Time Complexity\+: O(V+E) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a5944d8efac5ed35f6218f815e637b020}\label{class_graph_a5944d8efac5ed35f6218f815e637b020}} 
+\index{Graph@{Graph}!minimumSpanningTree@{minimumSpanningTree}}
+\index{minimumSpanningTree@{minimumSpanningTree}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{minimumSpanningTree()}{minimumSpanningTree()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ Graph\+::minimum\+Spanning\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Finds the minimum spanning tree of the graph using Prim\textquotesingle{}s algorithm. 
+
+\begin{DoxyReturn}{Returns}
+vector$<$\+Edge$>$ The edges of the minimum spanning tree. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a90ba93aaf1cd2b6fd4922656763e8dca}\label{class_graph_a90ba93aaf1cd2b6fd4922656763e8dca}} 
+\index{Graph@{Graph}!minimumSpanningTreeForComponent@{minimumSpanningTreeForComponent}}
+\index{minimumSpanningTreeForComponent@{minimumSpanningTreeForComponent}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{minimumSpanningTreeForComponent()}{minimumSpanningTreeForComponent()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{struct_edge}{Edge}} $>$ Graph\+::minimum\+Spanning\+Tree\+For\+Component (\begin{DoxyParamCaption}\item[{int}]{start\+Node,  }\item[{std\+::vector$<$ bool $>$ \&}]{visited }\end{DoxyParamCaption})}
+
+
+
+Finds the minimum spanning tree for a disconnected component of the graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Node} & The starting node of the component. \\
+\hline
+{\em visited} & The visited array to keep track of visited nodes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$\+Edge$>$ The edges of the minimum spanning tree for the component. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_afabfa6712577fc819dd7c7fbc21015d9}\label{class_graph_afabfa6712577fc819dd7c7fbc21015d9}} 
+\index{Graph@{Graph}!NearestNeighbor@{NearestNeighbor}}
+\index{NearestNeighbor@{NearestNeighbor}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{NearestNeighbor()}{NearestNeighbor()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::\+Nearest\+Neighbor (\begin{DoxyParamCaption}\item[{const vector$<$ int $>$ \&}]{cluster,  }\item[{bool}]{return\+To\+Start }\end{DoxyParamCaption})}
+
+
+
+Finds the approximate optimal path through the graph using the Nearest Neighbor algorithm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cluster} & The cluster of nodes to consider. \\
+\hline
+{\em return\+To\+Start} & Whether to return to the start node or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The approximate optimal path through the graph. Time Complexity\+: O(k$^\wedge$2 $\ast$ n$^\wedge$3), where k is the number of clusters and n is the average size of each cluster. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_aed669c5439699ca27cd67568f1a84567}\label{class_graph_aed669c5439699ca27cd67568f1a84567}} 
+\index{Graph@{Graph}!ratioBetweentwopaths@{ratioBetweentwopaths}}
+\index{ratioBetweentwopaths@{ratioBetweentwopaths}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{ratioBetweentwopaths()}{ratioBetweentwopaths()}}
+{\footnotesize\ttfamily double Graph\+::ratio\+Betweentwopaths (\begin{DoxyParamCaption}\item[{vector$<$ int $>$}]{opt,  }\item[{vector$<$ int $>$}]{test }\end{DoxyParamCaption})}
+
+
+
+Computes the ratio of the distances of two paths in the graph. 
+
+This function assumes the first node in the vectors is the starting node, and that both paths are closed loops (i.\+e., they start and end at the same node).
+
+
+\begin{DoxyParams}{Parameters}
+{\em opt} & The first path \\
+\hline
+{\em test} & The second path \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double The ratio of the total distance of the \textquotesingle{}test\textquotesingle{} path to the \textquotesingle{}opt\textquotesingle{} path, or -\/1 if the paths are not the same size or don\textquotesingle{}t start at the same node Time Complexity\+: O(n), where n is the number of nodes in the paths 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a72e87075f0c453a129c671eb50934278}\label{class_graph_a72e87075f0c453a129c671eb50934278}} 
+\index{Graph@{Graph}!removeDuplicateNodes@{removeDuplicateNodes}}
+\index{removeDuplicateNodes@{removeDuplicateNodes}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{removeDuplicateNodes()}{removeDuplicateNodes()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::remove\+Duplicate\+Nodes (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{eulerian\+Tour }\end{DoxyParamCaption})}
+
+
+
+Removes duplicate nodes from the Eulerian tour to obtain a Hamiltonian tour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em eulerian\+Tour} & The Eulerian tour containing duplicate nodes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The nodes visited in the Hamiltonian tour. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a9f0895ed781e6c0595418828f0d1ee16}\label{class_graph_a9f0895ed781e6c0595418828f0d1ee16}} 
+\index{Graph@{Graph}!TSPApproximation@{TSPApproximation}}
+\index{TSPApproximation@{TSPApproximation}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{TSPApproximation()}{TSPApproximation()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Graph\+::\+TSPApproximation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Computes an approximate solution to the Traveling Salesman Problem (TSP). 
+
+\begin{DoxyReturn}{Returns}
+vector$<$int$>$ The nodes visited in the approximate Hamiltonian tour. Time Complexity\+: O(n$^\wedge$2 log n), where n is the number of nodes in the graph. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_graph_a9068bcec8136ec4ec7c2fdb333cef024}\label{class_graph_a9068bcec8136ec4ec7c2fdb333cef024}} 
+\index{Graph@{Graph}!unionSets@{unionSets}}
+\index{unionSets@{unionSets}!Graph@{Graph}}
+\doxysubsubsection{\texorpdfstring{unionSets()}{unionSets()}}
+{\footnotesize\ttfamily void Graph\+::union\+Sets (\begin{DoxyParamCaption}\item[{int}]{set1,  }\item[{int}]{set2,  }\item[{vector$<$ int $>$ \&}]{parent }\end{DoxyParamCaption})}
+
+
+
+Merges two disjoint sets into a single set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em set1} & The representative node of the first set. \\
+\hline
+{\em set2} & The representative node of the second set. \\
+\hline
+{\em parent} & The parent array representing the disjoint sets. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Graph.\+h\item 
+Graph.\+cpp\end{DoxyCompactItemize}

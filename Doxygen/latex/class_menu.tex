@@ -1,0 +1,90 @@
+\hypertarget{class_menu}{}\doxysection{Menu Class Reference}
+\label{class_menu}\index{Menu@{Menu}}
+
+
+{\ttfamily \#include $<$Menu.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_menu_ad466dd83355124a6ed958430450bfe94}\label{class_menu_ad466dd83355124a6ed958430450bfe94}} 
+{\bfseries Menu} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{class_menu}{Menu}} object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_a35656cd130e24d69383a5c9d0a73a38c}\label{class_menu_a35656cd130e24d69383a5c9d0a73a38c}} 
+void {\bfseries run} ()
+\begin{DoxyCompactList}\small\item\em Runs the menu. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_menu_a8644c156bf5133a26f7d41f7cda3ae58}{input\+Test}} (char choice, std\+::vector$<$ int $>$ values)
+\begin{DoxyCompactList}\small\item\em Tests whether the input is valid. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_menu_a3eb6e3750fa5fd17cc12b995f05d43aa}\label{class_menu_a3eb6e3750fa5fd17cc12b995f05d43aa}} 
+void {\bfseries pause} ()
+\begin{DoxyCompactList}\small\item\em Pauses the program and waits for user input. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_menu_ab2f24c5b996c751d76e6fc5d370fc3db}{algomenu}} (\mbox{\hyperlink{class_graph}{Graph}} g, bool flag)
+\begin{DoxyCompactList}\small\item\em Displays the algorithm menu for a given graph and performs the chosen action. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_menu_a39f5bb2a17a3f106433c9a9074b5be7c}{print\+Path}} (vector$<$ int $>$ v)
+\begin{DoxyCompactList}\small\item\em Prints a path represented by a vector of integers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe para o \mbox{\hyperlink{class_menu}{Menu}}.
+
+Um menu apenas apresenta as opcoes. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_menu_ab2f24c5b996c751d76e6fc5d370fc3db}\label{class_menu_ab2f24c5b996c751d76e6fc5d370fc3db}} 
+\index{Menu@{Menu}!algomenu@{algomenu}}
+\index{algomenu@{algomenu}!Menu@{Menu}}
+\doxysubsubsection{\texorpdfstring{algomenu()}{algomenu()}}
+{\footnotesize\ttfamily void Menu\+::algomenu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_graph}{Graph}}}]{g,  }\item[{bool}]{flag }\end{DoxyParamCaption})}
+
+
+
+Displays the algorithm menu for a given graph and performs the chosen action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & The graph to operate on \\
+\hline
+{\em flag} & Flag indicating whether backtracking is applicable for the graph \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_menu_a8644c156bf5133a26f7d41f7cda3ae58}\label{class_menu_a8644c156bf5133a26f7d41f7cda3ae58}} 
+\index{Menu@{Menu}!inputTest@{inputTest}}
+\index{inputTest@{inputTest}!Menu@{Menu}}
+\doxysubsubsection{\texorpdfstring{inputTest()}{inputTest()}}
+{\footnotesize\ttfamily bool Menu\+::input\+Test (\begin{DoxyParamCaption}\item[{char}]{choice,  }\item[{std\+::vector$<$ int $>$}]{values }\end{DoxyParamCaption})}
+
+
+
+Tests whether the input is valid. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em choice} & The user\textquotesingle{}s choice. \\
+\hline
+{\em values} & A vector containing the values associated with the user\textquotesingle{}s choice. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the input is valid, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_menu_a39f5bb2a17a3f106433c9a9074b5be7c}\label{class_menu_a39f5bb2a17a3f106433c9a9074b5be7c}} 
+\index{Menu@{Menu}!printPath@{printPath}}
+\index{printPath@{printPath}!Menu@{Menu}}
+\doxysubsubsection{\texorpdfstring{printPath()}{printPath()}}
+{\footnotesize\ttfamily void Menu\+::print\+Path (\begin{DoxyParamCaption}\item[{vector$<$ int $>$}]{v }\end{DoxyParamCaption})}
+
+
+
+Prints a path represented by a vector of integers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector representing the path \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Menu.\+h\item 
+Menu.\+cpp\end{DoxyCompactItemize}
