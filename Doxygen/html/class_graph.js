@@ -26,6 +26,7 @@ var class_graph =
     [ "minimumSpanningTree", "class_graph.html#a5944d8efac5ed35f6218f815e637b020", null ],
     [ "minimumSpanningTreeForComponent", "class_graph.html#a90ba93aaf1cd2b6fd4922656763e8dca", null ],
     [ "NearestNeighbor", "class_graph.html#afabfa6712577fc819dd7c7fbc21015d9", null ],
+    [ "pathWeight", "class_graph.html#af10a2839ccf6964e9cb1bc2cf604b8a3", null ],
     [ "ratioBetweentwopaths", "class_graph.html#aed669c5439699ca27cd67568f1a84567", null ],
     [ "removeDuplicateNodes", "class_graph.html#a72e87075f0c453a129c671eb50934278", null ],
     [ "TSPApproximation", "class_graph.html#a9f0895ed781e6c0595418828f0d1ee16", null ],

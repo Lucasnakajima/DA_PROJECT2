@@ -327,6 +327,11 @@ public:
      */
     double ratioBetweentwopaths(vector<int>opt, vector<int>test);
 
+    /**
+     * @brief Calculates the weight of a given path in the graph.
+     * @param opt The path represented as a vector of node indices
+     * @return The weight of the path
+     */
     double pathWeight(vector<int> opt);
 };
 
