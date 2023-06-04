@@ -326,6 +326,8 @@ public:
      * Time Complexity: O(n), where n is the number of nodes in the paths
      */
     double ratioBetweentwopaths(vector<int>opt, vector<int>test);
+
+    double pathWeight(vector<int> opt);
 };
 
 
